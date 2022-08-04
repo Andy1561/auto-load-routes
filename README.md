@@ -20,10 +20,10 @@ import {AutoLoad} from 'auto-use-routes'
 let router = await AutoLoad(express.Router(),path.join(__dirname,'/api'))  
 app.use('/api',router)  
 
-fastify
-import {AutoLoad} from 'auto-use-routes'
-.....
-let plugin = async(fastify, opts, done)=> {
-    await AutoLoad(fastify,path.join(__dirname,'./server/api'),{log:true});
-}
-fastify.register(plugin, {prefix: '/api'})
+fastify  
+import {AutoLoad} from 'auto-use-routes'  
+.....  
+let plugin = async(fastify, opts, done)=> {  
+    await AutoLoad(fastify,path.join(__dirname,'./server/api'),{log:true});  
+}  
+fastify.register(plugin, {prefix: '/api'})  
