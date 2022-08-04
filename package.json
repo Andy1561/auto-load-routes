@@ -1,6 +1,6 @@
 {
   "name": "auto-use-routes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.cjs",
   "author": "andy1561",
   "license": "MIT",
@@ -12,5 +12,11 @@
     "url": "https://github.com/Andy1561/auto-use-routes/issues"
   },
   "homepage": "https://github.com/Andy1561/auto-use-routes#readme",
-  "description": ""
+  "description": "",
+  "keywords": [
+    "auto",
+    "routes",
+    "express",
+    "fastify"
+  ]
 }
