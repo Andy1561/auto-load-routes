@@ -1,0 +1,16 @@
+{
+  "name": "auto-use-routes",
+  "version": "1.0.1",
+  "main": "index.cjs",
+  "author": "andy1561",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andy1561/auto-use-routes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Andy1561/auto-use-routes/issues"
+  },
+  "homepage": "https://github.com/Andy1561/auto-use-routes#readme",
+  "description": ""
+}
