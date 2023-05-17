@@ -1,3 +1,5 @@
+let path = require('path')
+let glob = require('glob')
 function loadRouter(filename) {
     filename = filename.replace(/\\/g, "/");
     let urlarray = filename.split("/");
@@ -38,52 +40,52 @@ Array.prototype.insertAt = function(i,...rest){
   this.splice(i,0,...rest)
   return this
 }
-async function AutoLoad(router,workdir,opts){
-    let option = Object.assign({log:false},opts);
+async function loadRouter(router,workdir,{printlog=false}={}){
     workdir = workdir.replace(/\\/g,'/');
-    var filelist = require('glob').sync(`${workdir}/**/+(*.js|*.cjs|*.mjs)`);
+    let filelist = glob.sync(`${workdir}/**/+(*.js|*.cjs|*.mjs)`);
     let l1filelist = [];
     let l2filelist = [];
     let l3filelist = [];
-    let path = require('path')
-    for (var file of filelist) {
+    for (let file of filelist) {
+        let filename = path.basename(file)
+        if (filename.startsWith('_'))
+        {
+            continue
+        }
         let tmp = {
-          file:file,
           handler : (await import('file://'+file)).default,
           url : file.slice(workdir.length),
-          deeplength:file.split('/').length
-        };
-        if (path.basename(file).startsWith('[...')){
+          deeplength:file.slice(workdir.length+1).split('/').length
+        }
+        if (filename.startsWith('[...')){
           let index = l3filelist.findIndex(c=>c.deeplength<=tmp.deeplength);
           index = index==-1?0:index;
           l3filelist.insertAt(index,tmp);
         }
-        else if (path.basename(file).startsWith('[')){
+        else if (filename.startsWith('[')){
           let index = l2filelist.findIndex(c=>c.deeplength<=tmp.deeplength);
           index = index==-1?0:index;
           l2filelist.insertAt(index,tmp);
         }
-        else if (!path.basename(file).startsWith('_')){
+        else{
           let index = l1filelist.findIndex(c=>c.deeplength<=tmp.deeplength);
           index = index==-1?0:index;
           l1filelist.insertAt(index,tmp);
         }
     }
-    for (var item of l1filelist.concat(l2filelist).concat(l3filelist)) {
+    for (let item of [...l1filelist,...l2filelist,...l3filelist]) {
         let { url, methods } = loadRouter(item.url);
         if (methods.includes("GET")) {
             router.get(url, item.handler);
-            if (option.log)
+            if (printlog)
                 console.info(`${item.url} > GET ${url} `)
         }
         if (methods.includes("POST")) {
             router.post(url, item.handler);
-            if (option.log)
+            if (printlog)
                 console.info(`${item.url} > POST ${url} `)
         }
     }
     return router;
 }
-module.exports = {
-    AutoLoad
-}
+module.exports = loadRouter

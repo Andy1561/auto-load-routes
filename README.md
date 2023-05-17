@@ -22,16 +22,19 @@ export default (req,res)=>{
 ### express
 <pre>
 import express from 'express'  
-import {AutoLoad} from 'auto-use-routes'  
-let router = await AutoLoad(express.Router(),path.join(__dirname,'/api'))  
-app.use('/api',router)  
+import loadRouter from 'auto-use-routes'
+import path from 'path'
+const app = express()
+let router = await loadRouter(express.Router(),path.join(path.resolve(),'/api'),{printlog:true})
+app.use('/api',router)
+app.listen(3000);
 </pre>
 ### fastify
 <pre>
-import {AutoLoad} from 'auto-use-routes'  
+import loadRouter from 'auto-use-routes'  
 .....  
 let plugin = async(fastify, opts, done)=> {  
-    await AutoLoad(fastify,path.join(__dirname,'./server/api'),{log:true});  
+    await loadRouter(fastify,path.join(path.resolve(),'./server/api'),{printlog:true});  
 }  
 fastify.register(plugin, {prefix: '/api'})
 </pre>

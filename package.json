@@ -1,6 +1,6 @@
 {
   "name": "auto-use-routes",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "index.cjs",
   "author": "andy1561",
   "license": "MIT",
@@ -18,5 +18,8 @@
     "routes",
     "express",
     "fastify"
-  ]
+  ],
+  "dependencies": {
+    "glob": "^10.2.4"
+  }
 }
