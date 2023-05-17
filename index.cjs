@@ -1,6 +1,6 @@
 let path = require('path')
 let glob = require('glob')
-function loadRouter(filename) {
+function loadRouterMethod(filename) {
     filename = filename.replace(/\\/g, "/");
     let urlarray = filename.split("/");
     let methods = [];
@@ -74,7 +74,7 @@ async function loadRouter(router,workdir,{printlog=false}={}){
         }
     }
     for (let item of [...l1filelist,...l2filelist,...l3filelist]) {
-        let { url, methods } = loadRouter(item.url);
+        let { url, methods } = loadRouterMethod(item.url);
         if (methods.includes("GET")) {
             router.get(url, item.handler);
             if (printlog)
